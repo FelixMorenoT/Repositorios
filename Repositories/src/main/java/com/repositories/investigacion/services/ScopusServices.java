@@ -13,14 +13,11 @@ import com.google.gson.JsonParser;
 import com.repositories.investigacion.dto.Entry;
 
 @Service
-public class ScopusServices implements ServicesRepositories{
+public class ScopusServices extends GenericService {
 
-	@Autowired
-	private Connection conn;
 	
-	@Override
 	public List<Entry> getDataFrom(String theUrl) {
-		StringBuffer tempBuffer = conn.getDataRaw(theUrl);
+		StringBuffer tempBuffer = this.getConn().getDataRaw(theUrl);
 		
 		List<Entry> tempArray = new ArrayList<Entry>();
 		Entry entryTemp = null;
