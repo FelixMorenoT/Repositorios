@@ -3,7 +3,6 @@ package com.repositories.investigacion.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonArray;
@@ -15,7 +14,6 @@ import com.repositories.investigacion.dto.Entry;
 @Service
 public class ScopusServices extends GenericService {
 
-	
 	public List<Entry> getDataFrom(String theUrl) {
 		StringBuffer tempBuffer = this.getConn().getDataRaw(theUrl);
 		

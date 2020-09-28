@@ -9,21 +9,21 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.springframework.stereotype.Component;
-
 import com.repositories.investigacion.rest.ServiceRegistry;
 import com.repositories.investigacion.services.GenericService;
+import com.repositories.investigacion.utilities.PropertiesConfig;
 
-@Component
 public class ThreadInvoker {
 	
 	SynchronizedCache cache = new SynchronizedCache();
 	ServiceRegistry repoServices;
 	String query;
+	PropertiesConfig properties;
 
-    public void initialize(String squery, ServiceRegistry services) {
+    public void initialize(String squery, ServiceRegistry services, PropertiesConfig proper) {
     	repoServices = services;
     	query = squery;
+    	properties = proper;
 	}
     
     public static String mapToString(Map<String, GenericService> map) {
@@ -52,7 +52,7 @@ public class ThreadInvoker {
 	 	    try {
 	 	    	if(key != null) {
 	 	    		ServiceThread t = new ServiceThread();
-	 	    		t.initialize(URLEncoder.encode(key, "UTF-8"), query, cache, repoServices);
+	 	    		t.initialize(URLEncoder.encode(key, "UTF-8"), query, cache, repoServices, properties);
 	 	    		tasks.add(t);
 	 	    	}
 	 	    } catch (UnsupportedEncodingException e) {

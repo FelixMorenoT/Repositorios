@@ -1,16 +1,14 @@
 package com.repositories.investigacion.processing;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component; 
-
-import com.repositories.investigacion.rest.ServiceRegistry;
-
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 
-import com.repositories.investigacion.dto.Entry; 
+import com.repositories.investigacion.dto.Entry;
+import com.repositories.investigacion.rest.ServiceRegistry;
+import com.repositories.investigacion.utilities.PropertiesConfig; 
 
 @Component
 public class ServiceThread extends Thread {
@@ -23,31 +21,21 @@ public class ServiceThread extends Thread {
 	
 	public ServiceRegistry repoServices;
 	
-		
-	@Value("${url.repository}")
-	private String urlRepository = "https://api.elsevier.com/content/search/";
+	public PropertiesConfig propertiesConfig;
 	
-	@Value("${api.key}")
-	private String apiKey="1d864054ddd712f5834da3fc841e4b1d";
-	
-	@Value("${search.count}")
-	private String searchCount="10";
-	
-	@Value("${search.sort}")
-	private String searchRelevancy="relevancy";
-	
-	
-	public void initialize(String sname, String squery, SynchronizedCache cache_queue, ServiceRegistry services) {
+	public void initialize(String sname, String squery, SynchronizedCache cache_queue, ServiceRegistry services, PropertiesConfig proper) {
 		query = squery;
 		name = sname;
 		cache = cache_queue;
 		repoServices = services;
+		propertiesConfig = proper;
 	}
-    
+	
 	@Override
     public void run() {
 		List<Entry> tempEntry = null;
-		String urlTemp = urlRepository + name + "?apiKey=" + apiKey +"&query=all("+query.trim()+")&count="+searchCount+"&sort="+searchRelevancy; 
+		
+		String urlTemp = propertiesConfig.getUrlRepository() + name + "?apiKey=" + propertiesConfig.getApiKey() +"&query=all("+query.trim()+")&count="+propertiesConfig.getSearchCount()+"&sort="+propertiesConfig.getSearchRelevancy(); 
 	    urlTemp = urlTemp.replace(" ", "%20");
 		
 		System.out.println("name: " + name);

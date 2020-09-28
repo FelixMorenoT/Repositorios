@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.repositories.investigacion.dto.Entry;
 import com.repositories.investigacion.processing.SynchronizedCache;
 import com.repositories.investigacion.processing.ThreadInvoker;
+import com.repositories.investigacion.utilities.PropertiesConfig;
+import com.repositories.investigacion.utilities.SyncResult;
 
 @RestController
 @RequestMapping("/apiv2")
@@ -25,6 +27,9 @@ public class RestAccess {
 	
 	@Autowired
 	private ServiceRegistry repoServices;
+	
+	@Autowired
+	private SyncResult syncResult;
 	
 	@Value("${url.repository}")
 	private String urlRepository;
@@ -37,6 +42,9 @@ public class RestAccess {
 	
 	@Value("${search.sort}")
 	private String searchRelevancy;
+	
+	@Autowired
+	private PropertiesConfig propertiesConfig;
 	
 	@GetMapping("/{repository}/{keyWords}")
 	public ResponseEntity<List<Entry>>  accessToService(@PathVariable("repository") String repository , @PathVariable("keyWords") String words) {
@@ -56,9 +64,10 @@ public class RestAccess {
 	public ResponseEntity<List<Entry>>  accessToGeneralService(@PathVariable("keyWords") String words) {
 		repoServices.init();			
 		ThreadInvoker threads = new ThreadInvoker();
-		threads.initialize(words, repoServices);
+		threads.initialize(words, repoServices, propertiesConfig);
 		SynchronizedCache result = threads.invoke();
-		return result.get(1);
+		List<Entry> listResult = syncResult.getSyncResult(result);
+		return new ResponseEntity<List<Entry>>(listResult, HttpStatus.OK);
 	}
 
 }

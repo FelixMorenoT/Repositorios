@@ -15,7 +15,6 @@ public class SynchronizedCache {
 	}
 
 	public void print() {
-		// TODO Auto-generated method stub
 		System.out.println("Final size:" + cache.size());
 	}
 	

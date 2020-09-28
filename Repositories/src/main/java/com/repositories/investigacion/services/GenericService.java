@@ -33,7 +33,6 @@ public class GenericService implements ServicesRepositories{
 
 	@Override
 	public List<Entry> getDataFrom(String theUrl) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
