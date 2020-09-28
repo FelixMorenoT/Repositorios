@@ -14,14 +14,12 @@ import com.google.gson.JsonParser;
 import com.repositories.investigacion.dto.Entry;
 
 @Service
-public class ScienceDirectServices implements ServicesRepositories {
+public class ScienceDirectServices extends GenericService {
 	
-	@Autowired
-	private Connection conn;
 	
 	@Override
 	public List<Entry> getDataFrom(String theUrl) {
-		StringBuffer tempBuffer = conn.getDataRaw(theUrl);
+		StringBuffer tempBuffer = this.getConn().getDataRaw(theUrl);
 		String tempStrAuthors = "";
 				
 		List<Entry> tempArray = new ArrayList<Entry>();
