@@ -5,7 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,27 +31,19 @@ public class RestAccess {
 	@Autowired
 	private SyncResult syncResult;
 	
-	@Value("${url.repository}")
-	private String urlRepository;
-	
-	@Value("${api.key}")
-	private String apiKey;
-	
-	@Value("${search.count}")
-	private String searchCount;
-	
-	@Value("${search.sort}")
-	private String searchRelevancy;
-	
 	@Autowired
 	private PropertiesConfig propertiesConfig;
-	
+
 	@GetMapping("/{repository}/{keyWords}")
 	public ResponseEntity<List<Entry>>  accessToService(@PathVariable("repository") String repository , @PathVariable("keyWords") String words) {
 		log.info("Start " + repository);
 		
 		List<Entry> tempEntry = null;
-		String urlTemp = urlRepository + repository + "?apiKey=" + apiKey +"&query=all("+words.trim()+")&count="+searchCount+"&sort="+searchRelevancy; 
+		String urlTemp = propertiesConfig.getListProperties().get(repository).getUrl() + 
+				repository + "?apiKey=" + propertiesConfig.getListProperties().get(repository).getKey() 
+				+"&query=all("+words.trim()+")"
+				+"&count="+propertiesConfig.getListProperties().get(repository).getCount()
+				+"&sort="+propertiesConfig.getListProperties().get(repository).getSort(); 
 	
 		System.out.println(urlTemp);
 		
@@ -61,8 +53,9 @@ public class RestAccess {
 	}
 	
 	@GetMapping("/general/{keyWords}")
-	public ResponseEntity<List<Entry>>  accessToGeneralService(@PathVariable("keyWords") String words) {
-		repoServices.init();			
+	public ResponseEntity<List<Entry>> accessToGeneralService(@PathVariable("keyWords") String words) {
+		repoServices.init();
+		propertiesConfig.reload();
 		ThreadInvoker threads = new ThreadInvoker();
 		threads.initialize(words, repoServices, propertiesConfig);
 		SynchronizedCache result = threads.invoke();

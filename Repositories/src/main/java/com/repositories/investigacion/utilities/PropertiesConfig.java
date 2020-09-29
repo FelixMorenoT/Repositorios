@@ -1,36 +1,38 @@
 package com.repositories.investigacion.utilities;
 
-import org.springframework.beans.factory.annotation.Value;
+import java.util.HashMap;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 @Service
+@RefreshScope
 public class PropertiesConfig {
 
-	@Value("${url.repository}")
-	private String urlRepository ;
 	
-	@Value("${api.key}")
-	private String apiKey;
+	@Autowired
+	private PropertiesReader propertiesReader;
 	
-	@Value("${search.count}")
-	private String searchCount;
-	
-	@Value("${search.sort}")
-	private String searchRelevancy;
+	private HashMap<String, Repository> listProperties;
 
-	public String getUrlRepository() {
-		return urlRepository;
+	@PostConstruct
+	public void loadProperties () {
+		listProperties = propertiesReader.loadProperties();
+		//listProperties.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v.toString()));
+	}
+	
+	public HashMap<String, Repository> getListProperties() {
+		return listProperties;
 	}
 
-	public String getApiKey() {
-		return apiKey;
+	public void setListProperties(HashMap<String, Repository> listProperties) {
+		this.listProperties = listProperties;
 	}
-
-	public String getSearchCount() {
-		return searchCount;
-	}
-
-	public String getSearchRelevancy() {
-		return searchRelevancy;
+	
+	public void reload() {
+		loadProperties();
 	}
 }

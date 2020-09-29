@@ -3,9 +3,10 @@ package com.repositories.investigacion.rest;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.repositories.investigacion.services.GenericService;
-import com.repositories.investigacion.services.ScienceDirectServices;
-import com.repositories.investigacion.services.ScopusServices;
+
+import com.repositories.investigacion.services.imp.GenericService;
+import com.repositories.investigacion.services.imp.ScienceDirectServices;
+import com.repositories.investigacion.services.imp.ScopusServices;
 
 @Component
 public class ServiceRegistry{
@@ -17,7 +18,7 @@ public class ServiceRegistry{
 	
 	@Autowired
 	private ScienceDirectServices scienceDirectServices;
-	
+
 	public void init() {
 		getHasMap().put("scopus", scopusServices);
 		getHasMap().put("sciencedirect", scienceDirectServices);
@@ -35,5 +36,4 @@ public class ServiceRegistry{
 	    return mapAsString.toString();
 	}
 
-	
 }

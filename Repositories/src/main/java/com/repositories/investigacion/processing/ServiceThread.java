@@ -35,7 +35,12 @@ public class ServiceThread extends Thread {
     public void run() {
 		List<Entry> tempEntry = null;
 		
-		String urlTemp = propertiesConfig.getUrlRepository() + name + "?apiKey=" + propertiesConfig.getApiKey() +"&query=all("+query.trim()+")&count="+propertiesConfig.getSearchCount()+"&sort="+propertiesConfig.getSearchRelevancy(); 
+		String urlTemp = propertiesConfig.getListProperties().get(name).getUrl() + name + 
+						"?apiKey=" + propertiesConfig.getListProperties().get(name).getKey() +
+						"&query=all("+query.trim()+")&" +
+						"count="+propertiesConfig.getListProperties().get(name).getCount()+"&"+
+						"sort="+propertiesConfig.getListProperties().get(name).getSort(); 
+		
 	    urlTemp = urlTemp.replace(" ", "%20");
 		
 		System.out.println("name: " + name);

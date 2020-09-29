@@ -1,4 +1,4 @@
-package com.repositories.investigacion.services;
+package com.repositories.investigacion.services.imp;
 
 import java.util.ArrayList;
 import java.util.List;

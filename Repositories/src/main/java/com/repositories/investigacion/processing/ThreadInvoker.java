@@ -3,15 +3,19 @@ package com.repositories.investigacion.processing;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import com.repositories.investigacion.rest.ServiceRegistry;
-import com.repositories.investigacion.services.GenericService;
+import com.repositories.investigacion.services.imp.Connection;
+import com.repositories.investigacion.services.imp.GenericService;
 import com.repositories.investigacion.utilities.PropertiesConfig;
+import com.repositories.investigacion.utilities.Repository;
 
 public class ThreadInvoker {
 	
@@ -19,9 +23,11 @@ public class ThreadInvoker {
 	ServiceRegistry repoServices;
 	String query;
 	PropertiesConfig properties;
+	Connection connection = new Connection();
 
     public void initialize(String squery, ServiceRegistry services, PropertiesConfig proper) {
     	repoServices = services;
+    	proper.setListProperties(heartBeat(proper.getListProperties()));
     	query = squery;
     	properties = proper;
 	}
@@ -67,4 +73,21 @@ public class ThreadInvoker {
         
         return cache;
     }
+	
+	private HashMap<String, Repository> heartBeat(HashMap<String, Repository> tempRepos){
+
+		for (Entry<String, Repository> entry : tempRepos.entrySet()) {
+		    String key = entry.getKey();
+		    Repository value = entry.getValue();
+		    System.out.println("HB - " + value.getUrl() + value.getId() + "/?apiKey=" + value.getKey() +"&query=all(test)&count=1");
+		    boolean resultHeartBeat = connection.heartBeat(value.getUrl() + value.getId() + "/?apiKey=" + value.getKey() +"&query=all(test)&count=1");
+		    
+		    if(!resultHeartBeat) {
+		    	tempRepos.remove(key);
+		    	this.repoServices.getHasMap().remove(key);
+		    }
+		}
+
+		return tempRepos;
+	}
 }

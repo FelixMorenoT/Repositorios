@@ -1,4 +1,4 @@
-package com.repositories.investigacion.services;
+package com.repositories.investigacion.services.imp;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.repositories.investigacion.dto.Entry;
+import com.repositories.investigacion.services.ServicesRepositories;
 
 @Service
 public class GenericService implements ServicesRepositories{
