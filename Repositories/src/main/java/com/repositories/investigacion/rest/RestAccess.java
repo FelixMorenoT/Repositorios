@@ -19,8 +19,12 @@ import com.repositories.investigacion.processing.ThreadInvoker;
 import com.repositories.investigacion.utilities.PropertiesConfig;
 import com.repositories.investigacion.utilities.SyncResult;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/apiv2")
+@Api
 public class RestAccess {
 
 	private static final Logger log = LoggerFactory.getLogger(RestAccess.class);
