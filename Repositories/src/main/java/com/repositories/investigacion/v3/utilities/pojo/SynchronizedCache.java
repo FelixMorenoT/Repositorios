@@ -1,4 +1,4 @@
-package com.repositories.investigacion.processing;
+package com.repositories.investigacion.v3.utilities.pojo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import com.repositories.investigacion.v3.utilities.dto.Entry;
 public class SynchronizedCache {
 	private ArrayList<ResponseEntity<List<Entry>>> cache = new ArrayList<ResponseEntity<List<Entry>>>();
 	
-	synchronized void add(ResponseEntity<List<Entry>> responseEntity){
+	public synchronized void add(ResponseEntity<List<Entry>> responseEntity){
 		cache.add(responseEntity);
 	}
 
@@ -25,5 +25,4 @@ public class SynchronizedCache {
 	public ResponseEntity<List<Entry>> get(int i) {
 		return cache.get(i);
 	}
-
 }

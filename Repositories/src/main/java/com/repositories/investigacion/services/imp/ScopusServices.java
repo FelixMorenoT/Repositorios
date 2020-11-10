@@ -9,7 +9,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.repositories.investigacion.dto.Entry;
+import com.repositories.investigacion.v3.utilities.dto.Entry;
 
 @Service
 public class ScopusServices extends GenericService {

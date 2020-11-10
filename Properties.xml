@@ -5,13 +5,15 @@
         <url>https://api.elsevier.com/content/search/</url>  
         <key>1d864054ddd712f5834da3fc841e4b1d</key>  
         <count>1</count>  
-        <sort>relevancy</sort>  
+        <sort>relevancy</sort>
+	<online>false</online>    
     </Repository>  
     <Repository>  
         <id>sciencedirect</id>  
         <url>https://api.elsevier.com/content/search/</url>  
         <key>1d864054ddd712f5834da3fc841e4b1d</key>  
         <count>1</count>  
-        <sort>relevancy</sort>  
+        <sort>relevancy</sort>
+	<online>false</online>    
     </Repository>
 </Repositories> 

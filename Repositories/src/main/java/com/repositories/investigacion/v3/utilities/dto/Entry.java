@@ -1,9 +1,9 @@
-package com.repositories.investigacion.dto;
+package com.repositories.investigacion.v3.utilities.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Entry1 {
+public class Entry {
 
 	private String identifier;
 	private String title;
@@ -11,11 +11,11 @@ public class Entry1 {
 	private String date;
 	private String href;
 	
-	public Entry1() {
+	public Entry() {
 		
 	}
 	
-	public Entry1(String identifier, String title, String author, String date, String href) {
+	public Entry(String identifier, String title, String author, String date, String href) {
 		this.identifier = identifier;
 		this.title = title;
 		this.author = author;

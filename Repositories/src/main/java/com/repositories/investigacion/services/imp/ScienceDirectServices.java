@@ -10,19 +10,19 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.repositories.investigacion.dto.Entry;
+import com.repositories.investigacion.dto.Entry1;
 
 @Service
 public class ScienceDirectServices extends GenericService {
 	
 	
 	@Override
-	public List<Entry> getDataFrom(String theUrl) {
+	public List<Entry1> getDataFrom(String theUrl) {
 		StringBuffer tempBuffer = this.getConn().getDataRaw(theUrl);
 		String tempStrAuthors = "";
 				
-		List<Entry> tempArray = new ArrayList<Entry>();
-		Entry entryTemp = null;
+		List<Entry1> tempArray = new ArrayList<Entry1>();
+		Entry1 entryTemp = null;
 		
 		JsonObject jsonRawDataObject = (JsonObject) JsonParser.parseString(tempBuffer.toString());
 		JsonObject jsonDataObject = (JsonObject) jsonRawDataObject.get("search-results");
@@ -30,7 +30,7 @@ public class ScienceDirectServices extends GenericService {
 		
 		for (JsonElement jsonElement : jsonEntryArry) {
 			tempStrAuthors = "";
-			entryTemp = new Entry();
+			entryTemp = new Entry1();
 			entryTemp.setIdentifier(jsonElement.getAsJsonObject().get("dc:identifier").toString().replace("\"", ""));
 			entryTemp.setTitle(jsonElement.getAsJsonObject().get("dc:title").toString().replace("\"", ""));
 			JsonObject tempAuthorsOne;

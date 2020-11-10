@@ -1,33 +1,29 @@
-package com.repositories.investigacion.processing;
+package com.repositories.investigacion.v3.utilities.processing;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.repositories.investigacion.rest.ServiceRegistry1;
-import com.repositories.investigacion.services.imp.Connection;
+
 import com.repositories.investigacion.services.imp.GenericService;
-import com.repositories.investigacion.utilities.PropertiesConfig;
-import com.repositories.investigacion.utilities.Repository;
+import com.repositories.investigacion.v3.api.ServiceRegistry;
+import com.repositories.investigacion.v3.utilities.pojo.Repository;
+import com.repositories.investigacion.v3.utilities.pojo.SynchronizedCache;
 
 public class ThreadInvoker {
 	
-	SynchronizedCache cache = new SynchronizedCache();
-	ServiceRegistry1 repoServices;
-	String query;
-	PropertiesConfig properties;
-	Connection connection = new Connection();
+	private SynchronizedCache cache = new SynchronizedCache();
+	private ServiceRegistry repoServices;
+	private String query;
+	private Map<String, Repository> properties;
 
-    public void initialize(String squery, ServiceRegistry1 services, PropertiesConfig proper) {
+    public void initialize(String squery, ServiceRegistry services, Map<String, Repository>  proper) {
     	repoServices = services;
-    	proper.setListProperties(heartBeat(proper.getListProperties()));
     	query = squery;
     	properties = proper;
 	}
@@ -73,21 +69,4 @@ public class ThreadInvoker {
         
         return cache;
     }
-	
-	private HashMap<String, Repository> heartBeat(HashMap<String, Repository> tempRepos){
-
-		for (Entry<String, Repository> entry : tempRepos.entrySet()) {
-		    String key = entry.getKey();
-		    Repository value = entry.getValue();
-		    System.out.println("HB - " + value.getUrl() + value.getId() + "/?apiKey=" + value.getKey() +"&query=all(test)&count=1");
-		    boolean resultHeartBeat = connection.heartBeat(value.getUrl() + value.getId() + "/?apiKey=" + value.getKey() +"&query=all(test)&count=1");
-		    
-		    if(!resultHeartBeat) {
-		    	tempRepos.remove(key);
-		    	this.repoServices.getHasMap().remove(key);
-		    }
-		}
-
-		return tempRepos;
-	}
 }

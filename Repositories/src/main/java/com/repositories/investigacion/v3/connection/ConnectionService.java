@@ -1,4 +1,4 @@
-package com.repositories.investigacion.services.imp;
+package com.repositories.investigacion.v3.connection;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,10 +10,8 @@ import java.net.URL;
 
 import org.springframework.stereotype.Service;
 
-import com.repositories.investigacion.v3.connection.IConnectionService;
-
 @Service
-public class Connection implements IConnectionService {
+public class ConnectionService implements IConnectionService {
 	
 	private StringBuffer buffer = null;
 	

@@ -6,8 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import com.repositories.investigacion.dto.Entry;
-import com.repositories.investigacion.rest.ServiceRegistry;
+import com.repositories.investigacion.dto.Entry1;
+import com.repositories.investigacion.rest.ServiceRegistry1;
 import com.repositories.investigacion.utilities.PropertiesConfig; 
 
 @Component
@@ -19,11 +19,11 @@ public class ServiceThread extends Thread {
 	
 	public SynchronizedCache cache;
 	
-	public ServiceRegistry repoServices;
+	public ServiceRegistry1 repoServices;
 	
 	public PropertiesConfig propertiesConfig;
 	
-	public void initialize(String sname, String squery, SynchronizedCache cache_queue, ServiceRegistry services, PropertiesConfig proper) {
+	public void initialize(String sname, String squery, SynchronizedCache cache_queue, ServiceRegistry1 services, PropertiesConfig proper) {
 		query = squery;
 		name = sname;
 		cache = cache_queue;
@@ -33,7 +33,7 @@ public class ServiceThread extends Thread {
 	
 	@Override
     public void run() {
-		List<Entry> tempEntry = null;
+		List<Entry1> tempEntry = null;
 		
 		String urlTemp = propertiesConfig.getListProperties().get(name).getUrl() + name + 
 						"?apiKey=" + propertiesConfig.getListProperties().get(name).getKey() +
@@ -49,6 +49,6 @@ public class ServiceThread extends Thread {
 		
 		tempEntry = repoServices.getHasMap().get(name).getDataFrom(urlTemp); 
 		
-		cache.add(new ResponseEntity<List<Entry>>(tempEntry,HttpStatus.OK));
+		cache.add(new ResponseEntity<List<Entry1>>(tempEntry,HttpStatus.OK));
     }
 }
