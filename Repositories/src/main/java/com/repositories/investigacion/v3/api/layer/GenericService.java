@@ -1,26 +1,26 @@
-package com.repositories.investigacion.services.imp;
+package com.repositories.investigacion.v3.api.layer;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.repositories.investigacion.services.ServicesRepositories;
+import com.repositories.investigacion.v3.connection.ConnectionService;
 import com.repositories.investigacion.v3.utilities.dto.Entry;
 
 @Service
-public class GenericService implements ServicesRepositories{
+public class GenericService implements IGenericService{
 	
 	@Autowired
-	private Connection conn;
+	private ConnectionService conn;
 	
 	private String name;
 
-	public Connection getConn() {
+	public ConnectionService getConn() {
 		return conn;
 	}
 
-	public void setConn(Connection conn) {
+	public void setConn(ConnectionService conn) {
 		this.conn = conn;
 	}
 

@@ -1,4 +1,4 @@
-package com.repositories.investigacion.processing;
+package com.repositories.investigacion.v2.processing;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -11,11 +11,11 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import com.repositories.investigacion.rest.ServiceRegistry1;
-import com.repositories.investigacion.services.imp.Connection;
-import com.repositories.investigacion.services.imp.GenericService;
-import com.repositories.investigacion.utilities.PropertiesConfig;
-import com.repositories.investigacion.utilities.Repository;
+import com.repositories.investigacion.v2.rest.ServiceRegistry1;
+import com.repositories.investigacion.v2.utilities.PropertiesConfig;
+import com.repositories.investigacion.v2.utilities.Repository;
+import com.repositories.investigacion.v3.api.layer.GenericService;
+import com.repositories.investigacion.v3.connection.ConnectionService;
 
 public class ThreadInvoker {
 	
@@ -23,7 +23,7 @@ public class ThreadInvoker {
 	ServiceRegistry1 repoServices;
 	String query;
 	PropertiesConfig properties;
-	Connection connection = new Connection();
+	ConnectionService connection = new ConnectionService();
 
     public void initialize(String squery, ServiceRegistry1 services, PropertiesConfig proper) {
     	repoServices = services;

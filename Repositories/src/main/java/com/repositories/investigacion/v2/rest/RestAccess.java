@@ -1,4 +1,4 @@
-package com.repositories.investigacion.rest;
+package com.repositories.investigacion.v2.rest;
 
 import java.util.List;
 
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.repositories.investigacion.dto.Entry1;
-import com.repositories.investigacion.processing.SynchronizedCache;
-import com.repositories.investigacion.processing.ThreadInvoker;
-import com.repositories.investigacion.utilities.PropertiesConfig;
-import com.repositories.investigacion.utilities.SyncResult;
+import com.repositories.investigacion.v2.processing.SynchronizedCache;
+import com.repositories.investigacion.v2.processing.ThreadInvoker;
+import com.repositories.investigacion.v2.utilities.PropertiesConfig;
+import com.repositories.investigacion.v2.utilities.SyncResult;
+import com.repositories.investigacion.v3.utilities.dto.Entry;
 
 import io.swagger.annotations.Api;
 
@@ -38,10 +38,10 @@ public class RestAccess {
 	private PropertiesConfig propertiesConfig;
 
 	@GetMapping("/{repository}/{keyWords}")
-	public ResponseEntity<List<Entry1>>  accessToService(@PathVariable("repository") String repository , @PathVariable("keyWords") String words) {
+	public ResponseEntity<List<Entry>>  accessToService(@PathVariable("repository") String repository , @PathVariable("keyWords") String words) {
 		log.info("Start " + repository);
 		
-		List<Entry1> tempEntry = null;
+		List<Entry> tempEntry = null;
 		String urlTemp = propertiesConfig.getListProperties().get(repository).getUrl() + 
 				repository + "?apiKey=" + propertiesConfig.getListProperties().get(repository).getKey() 
 				+"&query=all("+words.trim()+")"
@@ -52,18 +52,18 @@ public class RestAccess {
 		
 		tempEntry = repoServices.getHasMap().get(repository).getDataFrom(urlTemp.replace(" ", "%20"));
 		log.info("End " + repository);
-		return new ResponseEntity<List<Entry1>>(tempEntry,HttpStatus.OK);
+		return new ResponseEntity<List<Entry>>(tempEntry,HttpStatus.OK);
 	}
 	
 	@GetMapping("/general/{keyWords}")
-	public ResponseEntity<List<Entry1>> accessToGeneralService(@PathVariable("keyWords") String words) {
+	public ResponseEntity<List<Entry>> accessToGeneralService(@PathVariable("keyWords") String words) {
 		repoServices.init();
 		propertiesConfig.reload();
 		ThreadInvoker threads = new ThreadInvoker();
 		threads.initialize(words, repoServices, propertiesConfig);
 		SynchronizedCache result = threads.invoke();
-		List<Entry1> listResult = syncResult.getSyncResult(result);
-		return new ResponseEntity<List<Entry1>>(listResult, HttpStatus.OK);
+		List<Entry> listResult = syncResult.getSyncResult(result);
+		return new ResponseEntity<List<Entry>>(listResult, HttpStatus.OK);
 	}
 
 }

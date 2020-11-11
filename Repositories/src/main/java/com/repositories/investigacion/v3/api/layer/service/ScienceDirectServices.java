@@ -1,4 +1,4 @@
-package com.repositories.investigacion.services.imp;
+package com.repositories.investigacion.v3.api.layer.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,19 +10,20 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.repositories.investigacion.dto.Entry1;
+import com.repositories.investigacion.v3.api.layer.GenericService;
+import com.repositories.investigacion.v3.utilities.dto.Entry;
 
 @Service
 public class ScienceDirectServices extends GenericService {
 	
 	
 	@Override
-	public List<Entry1> getDataFrom(String theUrl) {
+	public List<Entry> getDataFrom(String theUrl) {
 		StringBuffer tempBuffer = this.getConn().getDataRaw(theUrl);
 		String tempStrAuthors = "";
 				
-		List<Entry1> tempArray = new ArrayList<Entry1>();
-		Entry1 entryTemp = null;
+		List<Entry> tempArray = new ArrayList<Entry>();
+		Entry entryTemp = null;
 		
 		JsonObject jsonRawDataObject = (JsonObject) JsonParser.parseString(tempBuffer.toString());
 		JsonObject jsonDataObject = (JsonObject) jsonRawDataObject.get("search-results");
@@ -30,7 +31,7 @@ public class ScienceDirectServices extends GenericService {
 		
 		for (JsonElement jsonElement : jsonEntryArry) {
 			tempStrAuthors = "";
-			entryTemp = new Entry1();
+			entryTemp = new Entry();
 			entryTemp.setIdentifier(jsonElement.getAsJsonObject().get("dc:identifier").toString().replace("\"", ""));
 			entryTemp.setTitle(jsonElement.getAsJsonObject().get("dc:title").toString().replace("\"", ""));
 			JsonObject tempAuthorsOne;

@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.repositories.investigacion.services.imp.GenericService;
-import com.repositories.investigacion.services.imp.ScienceDirectServices;
-import com.repositories.investigacion.services.imp.ScopusServices;
+import com.repositories.investigacion.v3.api.layer.GenericService;
+import com.repositories.investigacion.v3.api.layer.service.ScienceDirectServices;
+import com.repositories.investigacion.v3.api.layer.service.ScopusServices;
 
 @Component
 public class ServiceRegistry{

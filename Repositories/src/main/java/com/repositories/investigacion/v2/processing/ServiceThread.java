@@ -1,4 +1,4 @@
-package com.repositories.investigacion.processing;
+package com.repositories.investigacion.v2.processing;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import com.repositories.investigacion.dto.Entry1;
-import com.repositories.investigacion.rest.ServiceRegistry1;
-import com.repositories.investigacion.utilities.PropertiesConfig; 
+import com.repositories.investigacion.v2.rest.ServiceRegistry1;
+import com.repositories.investigacion.v2.utilities.PropertiesConfig;
+import com.repositories.investigacion.v3.utilities.dto.Entry; 
 
 @Component
 public class ServiceThread extends Thread {
@@ -33,7 +33,7 @@ public class ServiceThread extends Thread {
 	
 	@Override
     public void run() {
-		List<Entry1> tempEntry = null;
+		List<Entry> tempEntry = null;
 		
 		String urlTemp = propertiesConfig.getListProperties().get(name).getUrl() + name + 
 						"?apiKey=" + propertiesConfig.getListProperties().get(name).getKey() +
@@ -49,6 +49,6 @@ public class ServiceThread extends Thread {
 		
 		tempEntry = repoServices.getHasMap().get(name).getDataFrom(urlTemp); 
 		
-		cache.add(new ResponseEntity<List<Entry1>>(tempEntry,HttpStatus.OK));
+		cache.add(new ResponseEntity<List<Entry>>(tempEntry,HttpStatus.OK));
     }
 }

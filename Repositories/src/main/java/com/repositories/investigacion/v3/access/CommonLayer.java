@@ -37,12 +37,8 @@ public class CommonLayer implements ICommonLayer{
 		
 		SynchronizedCache result =servicesInvoker.resultInvoker(query);
 		List<Entry> articlesResults = resultUnifer.unifier(result);
+		
 		return new ResponseEntity<List<Entry>>(articlesResults,HttpStatus.OK);
 	}
-	
-
-	
-	
-	
 
 }

@@ -8,4 +8,5 @@ public interface IPropertieLoader {
 
 	public void loader();
 	public Map<String, Repository> getProperties();
+	public void reload();
 }

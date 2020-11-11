@@ -9,9 +9,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
-import com.repositories.investigacion.services.imp.GenericService;
 import com.repositories.investigacion.v3.api.ServiceRegistry;
+import com.repositories.investigacion.v3.api.layer.GenericService;
 import com.repositories.investigacion.v3.utilities.pojo.Repository;
 import com.repositories.investigacion.v3.utilities.pojo.SynchronizedCache;
 

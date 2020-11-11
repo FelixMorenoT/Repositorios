@@ -36,6 +36,12 @@ public class PropertieLoader implements  IPropertieLoader {
 		loaderMethod();
 	}
 	
+	@Override
+	public void reload() {
+		log.info("Reloading Properties");
+		loaderMethod();
+	}
+	
 	private void loaderMethod() {
 		 
 		try {
@@ -53,13 +59,13 @@ public class PropertieLoader implements  IPropertieLoader {
 			switch (hashProperties.size()) {
 			case 0:
 					log.info("Initial Properties");
-					extractXMLData(nodeList);
+					extractXMLData(nodeList,false);
 				break;
 		
 			default:
-				if(hashProperties.size() < nodeList.getLength()) {
+				if(hashProperties.size() <= nodeList.getLength()) {
 					log.info("Update Properties");
-					extractXMLData(nodeList);
+					extractXMLData(nodeList,true);
 				}
 				break;
 			}
@@ -69,21 +75,37 @@ public class PropertieLoader implements  IPropertieLoader {
 		} 
 	}
 
-	private void extractXMLData(NodeList nodeList){
-		for (int itr = 0; itr < nodeList.getLength(); itr++){ 
-			Node node = nodeList.item(itr);  
-
-			if (node.getNodeType() == Node.ELEMENT_NODE)   {  
-				Element eElement = (Element) node;  
-				Repository repo = new Repository();
-					repo.setId(eElement.getElementsByTagName("id").item(0).getTextContent());
-					repo.setUrl(eElement.getElementsByTagName("url").item(0).getTextContent());
-					repo.setKey(eElement.getElementsByTagName("key").item(0).getTextContent());
-					repo.setCount(eElement.getElementsByTagName("count").item(0).getTextContent());
-					repo.setSort(eElement.getElementsByTagName("sort").item(0).getTextContent());
-					repo.setStatus(Boolean.valueOf(eElement.getElementsByTagName("online").item(0).getTextContent()));
-					hashProperties.put(repo.getId(), repo);
-			} 
+	private void extractXMLData(NodeList nodeList, boolean flag){
+		
+		if(flag) {
+			for (int itr = 0; itr < nodeList.getLength(); itr++){ 
+				Node node = nodeList.item(itr);  
+				if (node.getNodeType() == Node.ELEMENT_NODE)   { 
+					Element eElement = (Element) node;  
+					
+					Repository repo = hashProperties.get(eElement.getElementsByTagName("id").item(0).getTextContent());
+						repo.setUrl(eElement.getElementsByTagName("url").item(0).getTextContent());
+						repo.setKey(eElement.getElementsByTagName("key").item(0).getTextContent());
+						repo.setCount(eElement.getElementsByTagName("count").item(0).getTextContent());
+						repo.setSort(eElement.getElementsByTagName("sort").item(0).getTextContent());
+					hashProperties.computeIfPresent(eElement.getElementsByTagName("id").item(0).getTextContent(), (k,v)-> repo);
+				} 
+			}
+		}else {
+			for (int itr = 0; itr < nodeList.getLength(); itr++){ 
+				Node node = nodeList.item(itr);  
+				if (node.getNodeType() == Node.ELEMENT_NODE)   {  
+					Element eElement = (Element) node;  
+					Repository repo = new Repository();
+						repo.setId(eElement.getElementsByTagName("id").item(0).getTextContent());
+						repo.setUrl(eElement.getElementsByTagName("url").item(0).getTextContent());
+						repo.setKey(eElement.getElementsByTagName("key").item(0).getTextContent());
+						repo.setCount(eElement.getElementsByTagName("count").item(0).getTextContent());
+						repo.setSort(eElement.getElementsByTagName("sort").item(0).getTextContent());
+						repo.setStatus(Boolean.valueOf(eElement.getElementsByTagName("online").item(0).getTextContent()));
+						hashProperties.put(repo.getId(), repo);
+				} 
+			}
 		}
 	}
 	public Map<String, Repository> getHashProperties() {

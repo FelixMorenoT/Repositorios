@@ -22,6 +22,7 @@ import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
 import com.repositories.investigacion.v3.connection.IConnectionService;
+import com.repositories.investigacion.v3.loader.IPropertieLoader;
 import com.repositories.investigacion.v3.loader.PropertieLoader;
 import com.repositories.investigacion.v3.utilities.pojo.Repository;
 
@@ -30,17 +31,17 @@ import com.repositories.investigacion.v3.utilities.pojo.Repository;
 @EnableScheduling
 public class HeartBeat implements SchedulingConfigurer, IHeartBeat{
 
-
 	private static final Logger log = LoggerFactory.getLogger(PropertieLoader.class);
 
 	@Value("${heart.beat}")
 	private String timeStamp;
 	
 	@Autowired
-	private PropertieLoader propertieLoader;
+	private IPropertieLoader propertieLoader;
 	
 	@Autowired
 	private IConnectionService connection;
+	
 	
 	private Map<String, Repository> hashProperties;
 	
@@ -65,7 +66,7 @@ public class HeartBeat implements SchedulingConfigurer, IHeartBeat{
 		public void run() {
 					
 			try {
-				hashProperties = propertieLoader.getHashProperties();
+				hashProperties = propertieLoader.getProperties();
 				if(counter == 0) {
 					log.info("Next call heart beat  in {} milisecond" , 100);
 					Thread.sleep(100);
@@ -94,7 +95,7 @@ public class HeartBeat implements SchedulingConfigurer, IHeartBeat{
 
 	@Override
 	public void serverHeartBeat() {
-		hashProperties = propertieLoader.getHashProperties();
+		hashProperties = propertieLoader.getProperties();
 		for (Entry<String, Repository> entry : hashProperties.entrySet()) {
 		    String key = entry.getKey();
 		    Repository value = entry.getValue();
@@ -117,9 +118,8 @@ public class HeartBeat implements SchedulingConfigurer, IHeartBeat{
             }
             
             hashProperties.computeIfPresent(key, (k,v)-> value);
-           
 		}
-		
+		propertieLoader.reload();
 	}
 	
 	public Map<String, Repository> getHashProperties() {
