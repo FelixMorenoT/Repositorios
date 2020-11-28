@@ -104,6 +104,7 @@ public class HeartBeat implements SchedulingConfigurer, IHeartBeat{
             int responseCode = 0;
 			try {
 				responseCode = resultHeartBeat.getResponseCode();
+				log.info("URL: {}" , value.getUrl() + value.getId() + "/?apiKey=" + value.getKey() +"&query=all(test)&count=1");
 				log.info("Repository: {} - Response Code: {}" ,value.getId(), responseCode);
 				resultHeartBeat.disconnect();
 			} catch (IOException e) {

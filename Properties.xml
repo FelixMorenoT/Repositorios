@@ -4,7 +4,7 @@
         <id>scopus</id>  
         <url>https://api.elsevier.com/content/search/</url>  
         <key>1d864054ddd712f5834da3fc841e4b1d</key>  
-        <count>1</count>  
+        <count>25</count>  
         <sort>relevancy</sort>
 	<online>false</online>    
     </Repository>  
@@ -12,7 +12,7 @@
         <id>sciencedirect</id>  
         <url>https://api.elsevier.com/content/search/</url>  
         <key>1d864054ddd712f5834da3fc841e4b1d</key>  
-        <count>1</count>  
+        <count>25</count>  
         <sort>relevancy</sort>
 	<online>false</online>    
     </Repository>
