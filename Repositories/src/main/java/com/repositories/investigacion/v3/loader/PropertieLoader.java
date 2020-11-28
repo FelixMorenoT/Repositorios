@@ -1,6 +1,6 @@
 package com.repositories.investigacion.v3.loader;
 
-import java.io.InputStream;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,13 +17,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
 import com.repositories.investigacion.v3.utilities.pojo.Repository;
 
 @Component
@@ -34,13 +27,7 @@ public class PropertieLoader implements  IPropertieLoader {
 	@Value("${config.path}")
 	private String configPath;
 	
-	private Map<String, Repository> hashProperties  = new HashMap<String, Repository>();
-	
-	private Regions clientRegion = Regions.US_EAST_2;
-	private String bucketName = "propertiesrepo";
-	private String key = "Properties.xml";
-	private S3Object fullObject = null;
-
+	private Map<String, Repository> hashProperties  = new HashMap<String, Repository>();;
 	
 	@PostConstruct
 	@Override
@@ -56,31 +43,19 @@ public class PropertieLoader implements  IPropertieLoader {
 	}
 	
 	private void loaderMethod() {
-		try {  
-			
-			BasicAWSCredentials credentials = new BasicAWSCredentials("AKIAISO5EUNY7CGMBLVA", "7/FCsBZF9iXJZbDPFjH5ozoV/hk5IfmJnzNR6Ry4");
-	
-	        AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-	                    .withCredentials(new AWSStaticCredentialsProvider(credentials))
-	                    .withRegion(clientRegion)
-	                    .build();
-	        
-	        fullObject = s3Client.getObject(new GetObjectRequest(bucketName, key));
-            
-            InputStream is =fullObject.getObjectContent();
-	        
-			//File file = new File(configPath);
-			
+		 
+		try {
+			File file = new File(configPath);
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();  
 			DocumentBuilder db = dbf.newDocumentBuilder();  
-			Document doc = db.parse(is);  
+			Document doc = db.parse(file);  
 			doc.getDocumentElement().normalize();  
 		
 			NodeList nodeList = doc.getElementsByTagName("Repository");  
 			
 			log.info("Number Properties XML: {} " , nodeList.getLength());
 			log.info("Number Properties Memory: {} " , hashProperties.size());
-			 
+			
 			switch (hashProperties.size()) {
 			case 0:
 					log.info("Initial Properties");
@@ -99,7 +74,7 @@ public class PropertieLoader implements  IPropertieLoader {
 			e.printStackTrace();
 		} 
 	}
-	
+
 	private void extractXMLData(NodeList nodeList, boolean flag){
 		
 		if(flag) {

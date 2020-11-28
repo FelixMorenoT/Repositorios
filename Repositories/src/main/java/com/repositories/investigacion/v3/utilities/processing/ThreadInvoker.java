@@ -52,7 +52,6 @@ public class ThreadInvoker {
  	    for (String key : repoServices.getHasMap().keySet()) {
 	 	    try {
 	 	    	if(key != null) {
-	 	    		System.out.println("INICIO DEL PROCESO DE HILOS");
 	 	    		ServiceThread t = new ServiceThread();
 	 	    		t.initialize(URLEncoder.encode(key, "UTF-8"), query, cache, repoServices, properties);
 	 	    		tasks.add(t);

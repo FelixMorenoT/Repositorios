@@ -16,7 +16,7 @@ public class PropertiesConfig {
 	@Autowired
 	private PropertiesReader propertiesReader;
 	
-	private HashMap<String, com.repositories.investigacion.v3.utilities.pojo.Repository> listProperties;
+	private HashMap<String, Repository> listProperties;
 
 	@PostConstruct
 	public void loadProperties () {
@@ -24,11 +24,11 @@ public class PropertiesConfig {
 		//listProperties.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v.toString()));
 	}
 	
-	public HashMap<String, com.repositories.investigacion.v3.utilities.pojo.Repository> getListProperties() {
+	public HashMap<String, Repository> getListProperties() {
 		return listProperties;
 	}
 
-	public void setListProperties(HashMap<String, com.repositories.investigacion.v3.utilities.pojo.Repository> listProperties) {
+	public void setListProperties(HashMap<String, Repository> listProperties) {
 		this.listProperties = listProperties;
 	}
 	

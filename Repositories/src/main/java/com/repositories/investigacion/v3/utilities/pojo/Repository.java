@@ -1,7 +1,5 @@
 package com.repositories.investigacion.v3.utilities.pojo;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 public class Repository {
 
 	private String id;

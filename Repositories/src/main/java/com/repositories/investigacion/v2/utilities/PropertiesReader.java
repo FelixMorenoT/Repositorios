@@ -13,8 +13,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.repositories.investigacion.v3.utilities.pojo.Repository;
-
 @Service
 public class PropertiesReader {
 
@@ -24,7 +22,7 @@ public class PropertiesReader {
 	public HashMap<String, Repository> loadProperties() {
 		HashMap<String, Repository> tempProperties  = new HashMap<String, Repository>();
 		
-		/*try {
+		try {
 			File file = new File(configPath);
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();  
 			DocumentBuilder db = dbf.newDocumentBuilder();  
@@ -52,12 +50,8 @@ public class PropertiesReader {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		} */
+		}  
 		
-		tempProperties.put("scopus", new Repository("scopus", "https://api.elsevier.com/content/search/", "1d864054ddd712f5834da3fc841e4b1d", "25", "relevancy", false));
-		tempProperties.put("sciencedirect", new Repository("sciencedirect", "https://api.elsevier.com/content/search/", "1d864054ddd712f5834da3fc841e4b1d", "25", "relevancy", false));
-
-		return tempProperties;
 	}
 
 }

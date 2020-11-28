@@ -40,15 +40,5 @@ public class CommonLayer implements ICommonLayer{
 		
 		return new ResponseEntity<List<Entry>>(articlesResults,HttpStatus.OK);
 	}
-	
-	@GetMapping("/gen/{query}")
-	public List<Entry> accessRepoServices(@PathVariable("query") String query) {
-		log.info("Query to execute: {}" , query);
-		
-		SynchronizedCache result =servicesInvoker.resultInvoker(query);
-		List<Entry> articlesResults = resultUnifer.unifier(result);
-		
-		return articlesResults;
-	}
 
 }

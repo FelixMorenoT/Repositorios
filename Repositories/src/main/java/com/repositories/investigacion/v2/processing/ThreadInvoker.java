@@ -74,11 +74,11 @@ public class ThreadInvoker {
         return cache;
     }
 	
-	private HashMap<String, com.repositories.investigacion.v3.utilities.pojo.Repository> heartBeat(HashMap<String, com.repositories.investigacion.v3.utilities.pojo.Repository> tempRepos){
+	private HashMap<String, Repository> heartBeat(HashMap<String, Repository> tempRepos){
 
-		for (Entry<String, com.repositories.investigacion.v3.utilities.pojo.Repository> entry : tempRepos.entrySet()) {
+		for (Entry<String, Repository> entry : tempRepos.entrySet()) {
 		    String key = entry.getKey();
-		    com.repositories.investigacion.v3.utilities.pojo.Repository value = entry.getValue();
+		    Repository value = entry.getValue();
 		    System.out.println("HB - " + value.getUrl() + value.getId() + "/?apiKey=" + value.getKey() +"&query=all(test)&count=1");
 		    boolean resultHeartBeat = connection.heartBeat(value.getUrl() + value.getId() + "/?apiKey=" + value.getKey() +"&query=all(test)&count=1");
 		    
