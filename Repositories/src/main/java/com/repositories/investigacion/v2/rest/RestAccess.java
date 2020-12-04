@@ -21,9 +21,9 @@ import com.repositories.investigacion.v3.utilities.dto.Entry;
 
 import io.swagger.annotations.Api;
 
-@RestController
-@RequestMapping("/apiv2")
-@Api
+//@RestController
+//@RequestMapping("/apiv2")
+//@Api
 public class RestAccess {
 
 	private static final Logger log = LoggerFactory.getLogger(RestAccess.class);

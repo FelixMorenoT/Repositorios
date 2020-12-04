@@ -18,7 +18,6 @@ public class PropertiesConfig {
 	
 	private HashMap<String, Repository> listProperties;
 
-	@PostConstruct
 	public void loadProperties () {
 		listProperties = propertiesReader.loadProperties();
 		//listProperties.forEach((k,v) -> System.out.println("Key: " + k + ": Value: " + v.toString()));

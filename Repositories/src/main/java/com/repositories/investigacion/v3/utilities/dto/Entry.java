@@ -3,7 +3,7 @@ package com.repositories.investigacion.v3.utilities.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Entry {
+public class Entry{
 
 	private String identifier;
 	private String title;

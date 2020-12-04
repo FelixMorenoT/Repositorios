@@ -31,7 +31,7 @@ public class RepositoriesApplication {
 	}
 	
 	private ApiInfo apiInfo() {
-        return new ApiInfo("Galaxy Rest Api", "Api to Handle backend of Galaxy App", "1.0", "", new Contact("Felix Moreno & Pablo & Kevin",null, null), "", "", Collections.emptyList());
+        return new ApiInfo("Galaxy Rest Api", "Api to Handle backend of Galaxy App", "1.0", "", new Contact("Felix & Pablo & Kevin",null, null), "", "", Collections.emptyList());
     }
 }
 	

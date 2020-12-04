@@ -31,9 +31,6 @@ public class PropertieLoader implements  IPropertieLoader {
 
 	private static final Logger log = LoggerFactory.getLogger(PropertieLoader.class);
 	
-	@Value("${config.path}")
-	private String configPath;
-	
 	@Value("${key.code}")
 	private String keyCodeAWs;
 	
